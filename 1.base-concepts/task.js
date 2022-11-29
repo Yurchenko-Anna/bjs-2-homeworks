@@ -17,6 +17,17 @@ function solveEquation(a, b, c) {
 
 
 
+calculateTotalMortgage(15, 0, 10000, 36.)
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  
+  console.log(isNaN(percent));
+  console.log(isNaN(contribution));
+  console.log(isNaN(amount));
+  console.log(isNaN(countMonths));
+  let monthlyInterest = percent / 100 / 12;
+  let loanBody = amount - contribution;
+  let monthlyPayment = loanBody * (monthlyInterest + (monthlyInterest / (((1 + monthlyInterest)**countMonths) - 1)));
+  let totalAmount = monthlyPayment * countMonths;
+  totalAmount = +totalAmount.toFixed(2)
+  console.log(totalAmount);
+  return totalAmount;  
 }
