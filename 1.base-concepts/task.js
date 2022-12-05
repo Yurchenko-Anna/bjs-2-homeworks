@@ -20,11 +20,11 @@ function solveEquation(a, b, c) {
 calculateTotalMortgage(15, 0, 10000, 36.)
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   if (typeof(percent) !== "number") {
-    console.log("false");
+    console.log("false");   
   } else if (typeof(contribution) !== "number") {
-    console.log("false");
+    console.log("false");    
   } else if (typeof(amount) !== "number") {
-    console.log("false");
+    console.log("false");    
   } else {
     let monthlyInterest = percent / 100 / 12;
     let loanBody = amount - contribution;
