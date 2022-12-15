@@ -10,27 +10,40 @@ Student.prototype.setSubject = function (subjectName) {
 
 Student.prototype.addMarks = function (...marks) {
   if ("marks" in this) {
-    this.marks = [...marks];
+    this.marks.push(...marks);
   }  
 }
 
 Student.prototype.getAverage = function () {
-   if ("marks" in Student === false || marks.length === 0) {
+   if (!this.marks || this.marks.length === 0) {
     return 0;
-  } else {
-     let average = this.marks.reduce((acc, item, index, arr) => {
-      acc+=item; 
-      if (index === arr.length - 1) {
-        return acc / arr.length;
-      } 
-      return acc
-    }, 0) 
-     return average;
-  }
+  } 
+  let average = this.marks.reduce((acc, item, index, arr) => {
+    acc+=item; 
+    if (index === arr.length - 1){
+      return acc / arr.length;
+    } 
+    return acc
+  }, 0) 
+  return average;
+  
 }
 
 Student.prototype.exclude = function (reason) {
   delete this.subject;
   delete this.marks;
-  this.exclude = reason;
+  this.excluded = reason;
 }
+
+
+let student1 = new Student("Василиса", "женский", 19);
+student1.setSubject("Algebra");
+console.log(student1.getAverage()); // 0
+student1.addMarks(4, 5, 4, 5);
+console.log(student1.getAverage()); // 4.5
+console.log(student1);
+
+let student2 = new Student("Артём", "мужской", 25);
+student2.setSubject("Geometry");
+student2.exclude('плохая учёба')
+console.log(student2)
