@@ -11,18 +11,18 @@ class PrintEditionItem {
     return (this.state = this.state * 1.5);
   }
   
-  set condition(publicationСondition){
+  set state(publicationСondition){
     if (publicationСondition < 0){
-      this.state = 0;
+      this._state = 0;
     } else if (publicationСondition > 100) {
-        this.state = 100;
+        this._state = 100;
     } else {
-        this.state = publicationСondition;
+        this._state = publicationСondition;
     }     
   }
 
-  get condition(){
-    return this.state
+  get state(){
+    return this._state;
   } 
   
 }
@@ -77,11 +77,11 @@ class Library {
   }
 
   findBookBy(type, value){
-    return this.books.find(book => book[type] === value);
+    return this.books.find(book => book[type] === value) || null;    
   }
 
   giveBookByName(bookName){
-    const giveBook = this.findBookBy('name', 'name');
+    const giveBook = this.findBookBy('name', bookName);
     if (giveBook) {
       const indexGiveBook = this.books.indexOf(giveBook);
       this.books.splice(indexGiveBook, 1);
