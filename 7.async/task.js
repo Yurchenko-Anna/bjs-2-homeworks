@@ -1,56 +1,53 @@
+"use strict"
+
 class AlarmClock {
   constructor(){
     this.alarmCollection = [];
-    this.intervalId;
+    this.intervalId = null;
   }
 
   addClock(time, callback){
-    if (time === undefined || callback === undefined){
+    if (!time || !callback){
       throw new Error('Отсутствуют обязательные аргументы');
-    } else if(this.alarmCollection.find(call => call.time === time)){
+    } 
+    if(this.alarmCollection.some(call => call.time === time)){
       console.warn('Уже присутствует звонок на это же время');
     }
-    const newCall = {
-      id,
-      time = time,
-      canCall = callback,
-    }
-    this.alarmCollection.push(...newCall);
+    this.alarmCollection.push({time, callback, canCall: true});
   }
 
   removeClock(time){
-    const deleteCall = this.alarmCollection.filter(call => call.time === time);
-    this.alarmCollection.slice(deleteCall, 1);
+    this.alarmCollection = this.alarmCollection.filter(call => call.time !== time);
   }
 
   getCurrentFormattedTime(){
-    const time = Date.now();
+    return new Date().toLocaleTimeString([], {hour: "2-digit", minute: "2-digit",})
   }
 
   start(){
-    if (this.intervalId !== undefined){
+    if (this.intervalId){
       return;
     }
-    setInterval(() => {
-      this.alarmCollection.forEach((time) => if (time === Date.now()){
-        canCall = false;
+
+    this.intervalId = setInterval(() => this.alarmCollection.forEach((call) => {
+      if (call.time === this.getCurrentFormattedTime() && call.canCall){
+        call.canCall = false;
+        call.callback();
       }
-    }, 1000);    
-    this.intervalId = setInterval();
+    }), 1000);        
   }
 
   stop(){
-   function clearInterval(){
-      return intervalId = null;
-    }
+    clearInterval(this.intervalId);
+    this.intervalId = null;    
   }
 
   resetAllCalls(){
-    this.alarmCollection.forEach(canCall = true);
+    this.alarmCollection.forEach(call => call.canCall = true);
   }
 
   clearAlarms(){
-    stop();
+    this.stop();
     this.alarmCollection = [];    
   }
 }
