@@ -23,14 +23,16 @@ function debounceDecoratorNew(func, delay) {
   let timeoutId = null;
   function wrapper(...args){
     if (wrapper.allCount === 0){
-      delay = 0;   
+      func(...args);
+      wrapper.count +=1;
     }
        
     if (timeoutId){
       clearTimeout(timeoutId);
     }
 
-    timeoutId = setTimeout(() => {               
+    timeoutId = setTimeout(() => { 
+      func(...args);              
       wrapper.count +=1;
     }, delay);
     wrapper.allCount += 1; 
